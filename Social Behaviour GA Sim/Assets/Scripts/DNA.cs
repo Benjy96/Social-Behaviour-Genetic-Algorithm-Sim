@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// DNA Length is related to the number of decisions to make - 3 bools in brain means 6 decisions
+/// </summary>
 public class DNA
 {
     /// <summary>
     /// Genes are instructions (ways of interacting with the environment). I want these types of instructions:
     /// 1. Movement
+    ///     1.1: See Obstacle - 2 possibilities (move or don't)
+    ///     1.2: See Other - 2 possibilities (move or don't)
+    ///     1.3: See Resource - 2 possibilities (move or don't)
     /// 2. Resource Gathering
     /// 3. Attacking
     /// </summary>

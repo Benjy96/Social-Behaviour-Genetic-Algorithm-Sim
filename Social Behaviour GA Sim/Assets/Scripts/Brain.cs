@@ -7,16 +7,21 @@ using UnityEngine;
 /// </summary>
 public class Brain : MonoBehaviour
 {
+    public float timeAlive;
+
     public GameObject botPrefab;
     public GameObject eyes;
 
     public DNA dna;
     
-    public int DNALength = 2;   //dna length 2 because we have 2 decisions to make
-    public float timeAlive;
-
+    private int DNALength = 6;   //dna length 6 because we have 6 decisions to make
+   
     bool alive = true;
-    bool seeObstacle = true;
+     
+    //TODO: make a dynamic dictionary
+    bool seeObstacle = false;
+    bool seeOther = false;
+    bool seeResource = false;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -41,6 +46,7 @@ public class Brain : MonoBehaviour
         dna = new DNA(DNALength, 3);
         timeAlive = 0;
         alive = true;
+        DNALength = 
     }
 
     //Different genes are used depending on input - environment will affect which gene runs
@@ -51,6 +57,10 @@ public class Brain : MonoBehaviour
         timeAlive = PopulationManager.elapsed;
 
         seeObstacle = false;
+        seeOther = false;
+        GameObject other = null;
+
+        seeResource = false;
 
         //Register the environment - what the agent sees
         RaycastHit hit;
@@ -59,40 +69,89 @@ public class Brain : MonoBehaviour
             if (!hit.collider.gameObject.tag.Equals("Walkable"))
             {
                 seeObstacle = true;
+                RunMovementGenes();
+            }
+            else if (hit.collider.gameObject.tag.Equals("Bot"))
+            {
+                seeOther = true;
+                other = hit.collider.gameObject;
+                RunInteractionGenes(other);
             }
         }
-
-        HandleMovement();
     }
 
     /// <summary>
-    /// Control the movement related genes
+    /// Control the movement related genes (Each gene represents a possible instruction to run)
     /// </summary>
-    private void HandleMovement()
+    private void RunMovementGenes()
     {
         float turn = 0;
         float move = 0;
 
         if (seeObstacle)
         {
-            if (dna.GetGene(0) == 0)
-            {
-                move = 1; //forward
-            }
-            else if (dna.GetGene(0) == 1) turn = -90;  //turn left
-            else if (dna.GetGene(0) == 2) turn = 90;   //turn right
+            if (dna.GetGene(0) == (int)GeneInstructions.MovementForward) move = 1;
+            else if (dna.GetGene(0) == (int)GeneInstructions.MovementLeft) turn = -90;  
+            else if (dna.GetGene(0) == (int)GeneInstructions.MovementRight) turn = 90;  
         }
         else
         {
-            if (dna.GetGene(1) == 0)
-            {
-                move = 1;
-            }
-            else if (dna.GetGene(1) == 1) turn = -90;
-            else if (dna.GetGene(1) == 2) turn = 90;
+            if (dna.GetGene(1) == (int)GeneInstructions.MovementForward) move = 1;
+            else if (dna.GetGene(1) == (int)GeneInstructions.MovementLeft) turn = -90;
+            else if (dna.GetGene(1) == (int)GeneInstructions.MovementRight) turn = 90;
         }
 
         transform.Translate(0, 0, move * 0.1f);
         transform.Rotate(0, turn, 0);
     }
+
+    private void RunInteractionGenes(GameObject other)
+    {
+        if (seeOther)
+        {
+            Body otherBody = other.GetComponent<Body>();
+
+            if (dna.GetGene(2) == (int)GeneInstructions.InteractionAttack)
+            {
+                otherBody.Damage(20);   //todo: remove hard coding
+            }
+            else if (dna.GetGene(2) == (int)GeneInstructions.InteractionGive)
+            {
+                otherBody.Feed(20);
+                //TODO: Add benefits of feeding, e.g.:
+                    //1. Increased "visual" indicator of friendliness
+                    //2. Money from other
+            }
+            else if (dna.GetGene(2) == (int)GeneInstructions.InteractionIgnore) return;
+        }
+        else
+        {
+            if (dna.GetGene(3) == (int)GeneInstructions.InteractionAttack)
+            {
+                //TODO: Implement attacking
+            }
+            else if (dna.GetGene(3) == (int)GeneInstructions.InteractionGive)
+            {
+                //TODO: Implement resources
+            }
+            else if (dna.GetGene(3) == (int)GeneInstructions.InteractionIgnore) return;
+        }
+    }
+
+    private void RunResourceGenes()
+    {
+
+    }
+}
+
+public enum GeneInstructions
+{
+    MovementForward = 0,
+    MovementLeft,
+    MovementRight,
+    InteractionAttack,
+    InteractionGive,
+    InteractionIgnore,
+    ResourceLeave,
+    ResourceTake
 }
