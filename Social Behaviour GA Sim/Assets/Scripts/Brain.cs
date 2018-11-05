@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// The entities that have the genes/instructions for turning when they see the edge will be the ones to survive.
-/// This would produce emergent behaviour if obstacles were moving.
-/// Essentially an obstacle avoidance script.
+/// This class controls the bots.
 /// </summary>
 public class Brain : MonoBehaviour
 {
@@ -16,10 +14,9 @@ public class Brain : MonoBehaviour
     
     public int DNALength = 2;   //dna length 2 because we have 2 decisions to make
     public float timeAlive;
-    public float timeWalking;
 
     bool alive = true;
-    bool seeGround = true;
+    bool seeObstacle = true;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -51,29 +48,36 @@ public class Brain : MonoBehaviour
     private void Update()
     {
         if (!alive) return;
+        timeAlive = PopulationManager.elapsed;
 
-        //Debug.DrawRay(eyes.transform.position, eyes.transform.forward * 10, Color.red, 10);
-        seeGround = false;
+        seeObstacle = false;
 
+        //Register the environment - what the agent sees
         RaycastHit hit;
         if (Physics.Raycast(eyes.transform.position, eyes.transform.forward * 10, out hit))
         {
-            if (hit.collider.gameObject.tag == "platform")
+            if (!hit.collider.gameObject.tag.Equals("Walkable"))
             {
-                seeGround = true;
+                seeObstacle = true;
             }
         }
-        timeAlive = PopulationManager.elapsed;
 
+        HandleMovement();
+    }
+
+    /// <summary>
+    /// Control the movement related genes
+    /// </summary>
+    private void HandleMovement()
+    {
         float turn = 0;
         float move = 0;
 
-        if (seeGround)
+        if (seeObstacle)
         {
             if (dna.GetGene(0) == 0)
             {
                 move = 1; //forward
-                timeWalking += Time.deltaTime;
             }
             else if (dna.GetGene(0) == 1) turn = -90;  //turn left
             else if (dna.GetGene(0) == 2) turn = 90;   //turn right
@@ -83,7 +87,6 @@ public class Brain : MonoBehaviour
             if (dna.GetGene(1) == 0)
             {
                 move = 1;
-                timeWalking += Time.deltaTime;
             }
             else if (dna.GetGene(1) == 1) turn = -90;
             else if (dna.GetGene(1) == 2) turn = 90;

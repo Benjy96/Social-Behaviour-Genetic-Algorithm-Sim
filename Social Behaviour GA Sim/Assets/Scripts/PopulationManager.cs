@@ -51,7 +51,7 @@ public class PopulationManager : MonoBehaviour
 
     GameObject Breed(GameObject parent1, GameObject parent2)
     {
-        Vector3 startPos = new Vector3(transform.position.x + Random.Range(-2, 2), transform.position.y, transform.position.z + Random.Range(-2, 2));
+        Vector3 startPos = new Vector3(transform.position.x + Random.Range(-10, 10), transform.position.y, transform.position.z + Random.Range(-10, 10));
 
         //Create a child
         GameObject offspring = Instantiate(botPrefab, startPos, transform.rotation);
@@ -74,11 +74,11 @@ public class PopulationManager : MonoBehaviour
     public void BreedNewPopulation()
     {
         //Longest living go to end of list
-        //List<GameObject> sortedList = population.OrderBy(o => o.GetComponent<Brain>().timeAlive).ToList();
+        List<GameObject> sortedList = population.OrderBy(o => o.GetComponent<Brain>().timeAlive).ToList();
 
         //Longest travelled to end of the list - fittest
         //Consider fitness from two factors: time walking and time alive
-        List<GameObject> sortedList = population.OrderBy(o => (o.GetComponent<Brain>().timeWalking + o.GetComponent<Brain>().timeAlive)).ToList();
+        //List<GameObject> sortedList = population.OrderBy(o => (o.GetComponent<Brain>().timeWalking + o.GetComponent<Brain>().timeAlive)).ToList();
 
         population.Clear();
 

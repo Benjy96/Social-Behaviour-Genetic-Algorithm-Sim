@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class DNA
 {
+    /// <summary>
+    /// Genes are instructions (ways of interacting with the environment). I want these types of instructions:
+    /// 1. Movement
+    /// 2. Resource Gathering
+    /// 3. Attacking
+    /// </summary>
     List<int> genes = new List<int>();
     int dnaLength = 0;
     int maxValues = 0;

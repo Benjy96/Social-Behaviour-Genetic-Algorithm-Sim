@@ -260,7 +260,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1314195251}
   - component: {fileID: 1314195250}
-  - component: {fileID: 1314195249}
   m_Layer: 0
   m_Name: PopulationManager
   m_TagString: Untagged
@@ -268,7 +267,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1314195249
+--- !u!114 &1314195250
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -282,20 +281,6 @@ MonoBehaviour:
   trialTime: 100
   botPrefab: {fileID: 1772330915575732, guid: c05532479d2a1cb4d994fdb47ba8beb8, type: 2}
   populationSize: 50
---- !u!114 &1314195250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1314195248}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39a2471da8c7a4449864e3f99f735f88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trialTime: 100
-  botPrefab: {fileID: 0}
-  populationSize: 50
 --- !u!4 &1314195251
 Transform:
   m_ObjectHideFlags: 0
@@ -303,7 +288,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1314195248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -320,7 +305,7 @@ GameObject:
   - component: {fileID: 1813766380}
   - component: {fileID: 1813766379}
   - component: {fileID: 1813766378}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
