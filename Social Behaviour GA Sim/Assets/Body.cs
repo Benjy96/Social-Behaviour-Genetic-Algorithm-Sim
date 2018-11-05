@@ -13,7 +13,7 @@ public class Body : MonoBehaviour {
         renderer = GetComponent<MeshRenderer>();
     }
 
-    public void SetAggressiveness(int x, int maxDNAVal)
+    public void SetAggressivenessVisual(int x, int maxDNAVal)
     {
         float scaledValue = x / maxDNAVal;
         renderer.material.color = new Color(1 - scaledValue, 0, scaledValue);

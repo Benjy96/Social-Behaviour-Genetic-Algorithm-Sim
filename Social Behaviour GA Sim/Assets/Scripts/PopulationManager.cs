@@ -8,6 +8,8 @@ using UnityEngine;
 /// It is essentially a trial & error method of finding success.
 /// 
 /// It seems to me the skill of using genetic algorithms as problem solving comes from determining a good number of genes & what the genes do (instructions) AND how you determine fitness
+/// 
+/// TO DO: Measure fitness by "health management" -  health will decrease over time, meaning bots that walk into walls endlessly, that dont' avoid dangers, etc., will be rated unfit.
 /// </summary>
 public class PopulationManager : MonoBehaviour
 {
@@ -39,9 +41,9 @@ public class PopulationManager : MonoBehaviour
     {
         for (int i = 0; i < populationSize; i++)
         {
-            Vector3 startPos = new Vector3(transform.position.x + Random.Range(-2, 2),
+            Vector3 startPos = new Vector3(transform.position.x + Random.Range(-30, 30),
                                 transform.position.y,
-                                transform.position.z + Random.Range(-2, 2));
+                                transform.position.z + Random.Range(-30, 30));
 
             GameObject b = Instantiate(botPrefab, startPos, transform.rotation);
             b.GetComponent<Brain>().Init();
@@ -51,7 +53,7 @@ public class PopulationManager : MonoBehaviour
 
     GameObject Breed(GameObject parent1, GameObject parent2)
     {
-        Vector3 startPos = new Vector3(transform.position.x + Random.Range(-10, 10), transform.position.y, transform.position.z + Random.Range(-10, 10));
+        Vector3 startPos = new Vector3(transform.position.x + Random.Range(-30, 30), transform.position.y, transform.position.z + Random.Range(-30, 30));
 
         //Create a child
         GameObject offspring = Instantiate(botPrefab, startPos, transform.rotation);

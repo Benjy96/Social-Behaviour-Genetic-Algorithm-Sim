@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 23873906148998630}
   - component: {fileID: 136714980410318520}
   - component: {fileID: 114650164824276886}
+  - component: {fileID: 114488378247694358}
   m_Layer: 10
   m_Name: Bot
   m_TagString: Untagged
@@ -54,13 +55,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1254058833989184}
-  m_LocalRotation: {x: 0, y: 0, z: -0.21643952, w: 0.97629607}
-  m_LocalPosition: {x: 0.293, y: 0.627, z: 0}
-  m_LocalScale: {x: 0.4433943, y: 0.29324973, z: 0.60608387}
+  m_LocalRotation: {x: 0.2164396, y: 0, z: 0, w: 0.97629607}
+  m_LocalPosition: {x: 0, y: 0.634, z: 0.25}
+  m_LocalScale: {x: 0.5691988, y: 0.29324973, z: 0.60608387}
   m_Children: []
   m_Father: {fileID: 4855718893369630}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -25}
+  m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
 --- !u!4 &4855718893369630
 Transform:
   m_ObjectHideFlags: 1
@@ -171,6 +172,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114488378247694358
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1772330915575732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 121c2bc116733314b9d82cf7c0cc4005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
 --- !u!114 &114650164824276886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -182,10 +195,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c6538dac1a04946bfec534edd2aa60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeAlive: 0
   botPrefab: {fileID: 1772330915575732}
   eyes: {fileID: 1254058833989184}
-  DNALength: 2
-  timeAlive: 0
 --- !u!136 &136714980410318520
 CapsuleCollider:
   m_ObjectHideFlags: 1

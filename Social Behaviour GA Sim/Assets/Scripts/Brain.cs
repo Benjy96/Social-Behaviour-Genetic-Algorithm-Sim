@@ -27,10 +27,12 @@ public class Brain : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "dead")
+        if (collision.gameObject.tag == "Deadly" || body.health <= 0)
         {
             alive = false;
+            Debug.Log("Ouch!");
             //could wipe stats here if wanted               ----- NOTE -----
+            gameObject.SetActive(false);
         }
     }
 
@@ -50,7 +52,7 @@ public class Brain : MonoBehaviour
         alive = true;
 
         body = GetComponent<Body>();
-        body.SetAggressiveness(dna.GetGene(2), dnaValues);
+        body.SetAggressivenessVisual(dna.GetGene(2), dnaValues);
     }
 
     //Different genes are used depending on input - environment will affect which gene runs
@@ -59,6 +61,7 @@ public class Brain : MonoBehaviour
     {
         if (!alive) return;
         timeAlive = PopulationManager.elapsed;
+        Debug.DrawRay(eyes.transform.position, eyes.transform.forward * 10, Color.red, 10);
 
         seeObstacle = false;
         seeOther = false;
