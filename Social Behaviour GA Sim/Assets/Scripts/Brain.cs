@@ -13,8 +13,10 @@ public class Brain : MonoBehaviour
     public GameObject eyes;
 
     public DNA dna;
+    private Body body;
     
     private int DNALength = 6;   //dna length 6 because we have 6 decisions to make
+    private int dnaValues = 3;
    
     bool alive = true;
      
@@ -43,10 +45,12 @@ public class Brain : MonoBehaviour
         //0 - forward
         //1 - left
         //2 - right
-        dna = new DNA(DNALength, 3);
+        dna = new DNA(DNALength, dnaValues);
         timeAlive = 0;
         alive = true;
-        DNALength = 
+
+        body = GetComponent<Body>();
+        body.SetAggressiveness(dna.GetGene(2), dnaValues);
     }
 
     //Different genes are used depending on input - environment will affect which gene runs
@@ -109,6 +113,7 @@ public class Brain : MonoBehaviour
     {
         if (seeOther)
         {
+            //TODO: add inner options, such as see colour of enemy and take action depending on their colour
             Body otherBody = other.GetComponent<Body>();
 
             if (dna.GetGene(2) == (int)GeneInstructions.InteractionAttack)
@@ -123,18 +128,6 @@ public class Brain : MonoBehaviour
                     //2. Money from other
             }
             else if (dna.GetGene(2) == (int)GeneInstructions.InteractionIgnore) return;
-        }
-        else
-        {
-            if (dna.GetGene(3) == (int)GeneInstructions.InteractionAttack)
-            {
-                //TODO: Implement attacking
-            }
-            else if (dna.GetGene(3) == (int)GeneInstructions.InteractionGive)
-            {
-                //TODO: Implement resources
-            }
-            else if (dna.GetGene(3) == (int)GeneInstructions.InteractionIgnore) return;
         }
     }
 

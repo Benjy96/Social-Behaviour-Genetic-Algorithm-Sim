@@ -4,7 +4,20 @@ using UnityEngine;
 
 public class Body : MonoBehaviour {
 
+    MeshRenderer renderer;
+
     public int health = 100;
+
+    private void Awake()
+    {
+        renderer = GetComponent<MeshRenderer>();
+    }
+
+    public void SetAggressiveness(int x, int maxDNAVal)
+    {
+        float scaledValue = x / maxDNAVal;
+        renderer.material.color = new Color(1 - scaledValue, 0, scaledValue);
+    }
 
     public void Damage(int amount)
     {
