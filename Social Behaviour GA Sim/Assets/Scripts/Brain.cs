@@ -121,47 +121,47 @@ public class Brain : MonoBehaviour
         //TODO: work out how to have multiple environmental factors within genes
         if (seeObstacle)
         {
-            if (dna.GetGene(0) == (int)GeneInstructions.MovementForward) move += 0.33f;
-            else if (dna.GetGene(0) == (int)GeneInstructions.MovementLeft) turn -= 90;
-            else if (dna.GetGene(0) == (int)GeneInstructions.MovementRight) turn += 90;
-            else if (dna.GetGene(0) == (int)GeneInstructions.MovementStop) move -= 33;
+            if (dna.GetGene(0) == (int)MovementInstructions.MovementForward) move += 0.33f;
+            else if (dna.GetGene(0) == (int)MovementInstructions.MovementLeft) turn -= 90;
+            else if (dna.GetGene(0) == (int)MovementInstructions.MovementRight) turn += 90;
+            else if (dna.GetGene(0) == (int)MovementInstructions.MovementStop) move -= 33;
         }
         else
         {
-            if (dna.GetGene(1) == (int)GeneInstructions.MovementForward) move += 0.33f;
-            else if (dna.GetGene(1) == (int)GeneInstructions.MovementLeft) turn -= 90;
-            else if (dna.GetGene(1) == (int)GeneInstructions.MovementRight) turn += 90;
-            else if (dna.GetGene(1) == (int)GeneInstructions.MovementStop) move -= 33;
+            if (dna.GetGene(1) == (int)MovementInstructions.MovementForward) move += 0.33f;
+            else if (dna.GetGene(1) == (int)MovementInstructions.MovementLeft) turn -= 90;
+            else if (dna.GetGene(1) == (int)MovementInstructions.MovementRight) turn += 90;
+            else if (dna.GetGene(1) == (int)MovementInstructions.MovementStop) move -= 33;
         }
 
         if (seeOther)
         {
-            if (dna.GetGene(2) == (int)GeneInstructions.MovementForward) move += 0.33f;
-            else if (dna.GetGene(2) == (int)GeneInstructions.MovementLeft) turn -= 90;
-            else if (dna.GetGene(2) == (int)GeneInstructions.MovementRight) turn += 90;
-            else if (dna.GetGene(2) == (int)GeneInstructions.MovementStop) move -= 33;
+            if (dna.GetGene(2) == (int)MovementInstructions.MovementForward) move += 0.33f;
+            else if (dna.GetGene(2) == (int)MovementInstructions.MovementLeft) turn -= 90;
+            else if (dna.GetGene(2) == (int)MovementInstructions.MovementRight) turn += 90;
+            else if (dna.GetGene(2) == (int)MovementInstructions.MovementStop) move -= 33;
         }
         else
         {
-            if (dna.GetGene(3) == (int)GeneInstructions.MovementForward) move += 0.33f;
-            else if (dna.GetGene(3) == (int)GeneInstructions.MovementLeft) turn -= 90;
-            else if (dna.GetGene(3) == (int)GeneInstructions.MovementRight) turn += 90;
-            else if (dna.GetGene(3) == (int)GeneInstructions.MovementStop) move -= 33;
+            if (dna.GetGene(3) == (int)MovementInstructions.MovementForward) move += 0.33f;
+            else if (dna.GetGene(3) == (int)MovementInstructions.MovementLeft) turn -= 90;
+            else if (dna.GetGene(3) == (int)MovementInstructions.MovementRight) turn += 90;
+            else if (dna.GetGene(3) == (int)MovementInstructions.MovementStop) move -= 33;
         }
 
         if (seeResource)
         {
-            if (dna.GetGene(4) == (int)GeneInstructions.MovementForward) move += 0.33f;
-            else if (dna.GetGene(4) == (int)GeneInstructions.MovementLeft) turn -= 90;
-            else if (dna.GetGene(4) == (int)GeneInstructions.MovementRight) turn += 90;
-            else if (dna.GetGene(4) == (int)GeneInstructions.MovementStop) move -= 33;
+            if (dna.GetGene(4) == (int)MovementInstructions.MovementForward) move += 0.33f;
+            else if (dna.GetGene(4) == (int)MovementInstructions.MovementLeft) turn -= 90;
+            else if (dna.GetGene(4) == (int)MovementInstructions.MovementRight) turn += 90;
+            else if (dna.GetGene(4) == (int)MovementInstructions.MovementStop) move -= 33;
         }
         else
         {
-            if (dna.GetGene(5) == (int)GeneInstructions.MovementForward) move += 0.33f;
-            else if (dna.GetGene(5) == (int)GeneInstructions.MovementLeft) turn -= 33;
-            else if (dna.GetGene(5) == (int)GeneInstructions.MovementRight) turn += 33;
-            else if (dna.GetGene(5) == (int)GeneInstructions.MovementStop) move -= 0.33f;
+            if (dna.GetGene(5) == (int)MovementInstructions.MovementForward) move += 0.33f;
+            else if (dna.GetGene(5) == (int)MovementInstructions.MovementLeft) turn -= 33;
+            else if (dna.GetGene(5) == (int)MovementInstructions.MovementRight) turn += 33;
+            else if (dna.GetGene(5) == (int)MovementInstructions.MovementStop) move -= 0.33f;
         }
 
         move = Mathf.Clamp(move, 0, 1);
@@ -177,50 +177,51 @@ public class Brain : MonoBehaviour
             //TODO: add inner options, such as see colour of enemy and take action depending on their colour
             Body otherBody = other.GetComponent<Body>();
 
-            if (dna.GetGene(6) == (int)GeneInstructions.InteractionAttack)
+            if (dna.GetGene(6) == (int)InteractionInstructions.InteractionAttack)
             {
                 otherBody.Damage(20);   //todo: remove hard coding
                 Debug.DrawLine(transform.position, other.transform.position, Color.green);
             }
-            else if (dna.GetGene(6) == (int)GeneInstructions.InteractionGive)
+            else if (dna.GetGene(6) == (int)InteractionInstructions.InteractionGive)
             {
                 otherBody.Feed(20);
                 //TODO: Add benefits of feeding, e.g.:
                     //1. Increased "visual" indicator of friendliness
                     //2. Money from other
             }
-            else if(dna.GetGene(6) == (int)GeneInstructions.InteractionTrade)
+            else if(dna.GetGene(6) == (int)InteractionInstructions.InteractionTrade)
             {
                 //TODO: implement if have, feed other, get money
                 //TODO: events? benefits / consequences simpler than communication
             }
-            else if (dna.GetGene(6) == (int)GeneInstructions.InteractionIgnore) return;
+            else if (dna.GetGene(6) == (int)InteractionInstructions.InteractionIgnore) return;
         }
     }
 
     private void RunResourceGenes(GameObject resource)
     {
+        Debug.Log("seeResource is: " + seeResource);
         if (seeResource)
         {
             Resource r = resource.GetComponent<Resource>();
 
-            if (dna.GetGene(7) == (int)GeneInstructions.ResourceLeave)
+            if (dna.GetGene(7) == (int)ResourceInstructions.ResourceLeave)
             {
                 //Do nothing
                 Debug.Log("I'm on a diet");
             }
-            else if (dna.GetGene(7) == (int)GeneInstructions.ResourceTake)
+            else if (dna.GetGene(7) == (int)ResourceInstructions.ResourceTake)
             {
                 //TODO: Pickup - will drop on death
-                //Debug.Log("I think I'll keep this for later.");
+                Debug.Log("I think I'll keep this for later.");
             }
-            else if (dna.GetGene(7) == (int)GeneInstructions.ResourceEat)
+            else if (dna.GetGene(7) == (int)ResourceInstructions.ResourceEat)
             {
                 Debug.Log("Fuck me, that looks tasty. I'll have some of that.");
                 r.Eat(20);
                 body.Feed(20);
             }
-            else if(dna.GetGene(7) == (int)GeneInstructions.ResourceSpoil)
+            else if(dna.GetGene(7) == (int)ResourceInstructions.ResourceSpoil)
             {
                 //TODO: Implement consequence
                 Debug.Log("Eat this, fuckers.");
@@ -230,17 +231,25 @@ public class Brain : MonoBehaviour
     }
 }
 
-public enum GeneInstructions
+public enum MovementInstructions
 {
     MovementForward = 0,
     MovementLeft,
     MovementRight,
     MovementStop,
-    InteractionAttack,
+}
+
+public enum InteractionInstructions
+{
+    InteractionAttack = 0,
     InteractionGive,
     InteractionTrade,
     InteractionIgnore,
-    ResourceLeave,
+}
+
+public enum ResourceInstructions
+{
+    ResourceLeave = 0,
     ResourceTake,
     ResourceEat,
     ResourceSpoil
