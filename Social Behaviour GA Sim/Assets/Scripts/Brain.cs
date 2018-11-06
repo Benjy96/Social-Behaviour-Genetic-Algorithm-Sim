@@ -68,6 +68,7 @@ public class Brain : MonoBehaviour
         GameObject other = null;
 
         seeResource = false;
+        GameObject resource = null;
 
         //Register the environment - what the agent sees
         RaycastHit hit;
@@ -83,10 +84,16 @@ public class Brain : MonoBehaviour
                 seeOther = true;
                 other = hit.collider.gameObject;
             }
+            else if (hit.collider.gameObject.tag.Equals("Resource"))
+            {
+                seeResource = true;
+                resource = hit.collider.gameObject;
+            }
         }
 
-        RunInteractionGenes(other);
         RunMovementGenes();
+        RunInteractionGenes(other);
+        RunResourceGenes(resource);
     }
 
     /// <summary>
@@ -166,13 +173,38 @@ public class Brain : MonoBehaviour
                     //1. Increased "visual" indicator of friendliness
                     //2. Money from other
             }
+            else if(dna.GetGene(6) == (int)GeneInstructions.InteractionTrade)
+            {
+                //TODO: implement if have, feed other, get money
+                //TODO: events? benefits / consequences simpler than communication
+            }
             else if (dna.GetGene(6) == (int)GeneInstructions.InteractionIgnore) return;
         }
     }
 
-    private void RunResourceGenes()
+    private void RunResourceGenes(GameObject resource)
     {
+        if (seeResource)
+        {
+            Resource r = resource.GetComponent<Resource>();
 
+            if (dna.GetGene(7) == (int)GeneInstructions.ResourceLeave)
+            {
+                //Do nothing
+            }
+            else if (dna.GetGene(7) == (int)GeneInstructions.ResourceTake)
+            {
+                //TODO: Pickup - will drop on death
+            }
+            else if (dna.GetGene(7) == (int)GeneInstructions.ResourceEat)
+            {
+                body.Feed(20);
+            }
+            else if(dna.GetGene(7) == (int)GeneInstructions.ResourceSpoil)
+            {
+                //TODO: Implement destroying resource & consequence
+            }
+        }
     }
 }
 
@@ -184,7 +216,10 @@ public enum GeneInstructions
     MovementStop,
     InteractionAttack,
     InteractionGive,
+    InteractionTrade,
     InteractionIgnore,
     ResourceLeave,
-    ResourceTake
+    ResourceTake,
+    ResourceEat,
+    ResourceSpoil
 }

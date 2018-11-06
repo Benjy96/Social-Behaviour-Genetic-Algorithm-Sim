@@ -6,7 +6,7 @@ public class Body : MonoBehaviour {
 
     MeshRenderer renderer;
 
-    public int health = 100;
+    public float health = 100;
 
     private void Awake()
     {
@@ -27,5 +27,10 @@ public class Body : MonoBehaviour {
     public void Feed(int amount)
     {
         health = Mathf.Clamp(health += amount, 0, 100);
+    }
+
+    private void Update()
+    {
+        health -= Time.deltaTime;
     }
 }
