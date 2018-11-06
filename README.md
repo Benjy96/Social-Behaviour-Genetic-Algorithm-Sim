@@ -1,9 +1,9 @@
 # Social-Behaviour-Genetic-Algorithm-Sim
-Trying to see whether anti-social or social behaviour emerges in agents with friendly and violent capabilities in a survival game mode
+Trying to see whether anti-social or social behaviour emerges in agents with friendly and violent capabilities in a survival game mode.
 
 Fitness will be determined by a food level/whether they survived other NPCs. The hungriest (or dead) NPCs will be rated unfit, and will not breed the next generation.
 
-Resource gathering (food) will rid the generations of "lazy" NPCs that sit and spin on the spot, producing obstacle avoidance.
+Resource gathering (food) will rid the generations of "lazy" NPCs that sit and spin on the spot or walk into walls, producing movement & obstacle avoidance.
 
 The interesting part will be emergent behaviour between NPCs when I add in a full range of interactions, determined by their genes.
 
