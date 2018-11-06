@@ -15,7 +15,7 @@ public class Brain : MonoBehaviour
     public DNA dna;
     private Body body;
     
-    private int DNALength = 7;   //dna length 7 because 7 decisions currently implemented
+    private int DNALength = 8;   //dna length 8 because 8 decisions currently implemented
     private int dnaValues = 4;
    
     bool alive = true;
@@ -105,49 +105,53 @@ public class Brain : MonoBehaviour
         float turn = 0;
         float move = 0;
 
+        //TODO: Sum result of genes? The last gene will overwrite all previous - think flocking algorithm
+        //Need weights since each bool will have a say on input - could weight genes, or make gene weighting genes
+        //But yea, if we have multiple setters of the move variable, it needs to be sums rather than assignments, unless we just do one bool for movement
+        //TODO: work out how to have multiple environmental factors within genes
         if (seeObstacle)
         {
-            if (dna.GetGene(0) == (int)GeneInstructions.MovementForward) move = 1;
-            else if (dna.GetGene(0) == (int)GeneInstructions.MovementLeft) turn = -90;
-            else if (dna.GetGene(0) == (int)GeneInstructions.MovementRight) turn = 90;
-            else if (dna.GetGene(0) == (int)GeneInstructions.MovementStop) move = 0;
+            if (dna.GetGene(0) == (int)GeneInstructions.MovementForward) move += 0.33f;
+            else if (dna.GetGene(0) == (int)GeneInstructions.MovementLeft) turn -= 90;
+            else if (dna.GetGene(0) == (int)GeneInstructions.MovementRight) turn += 90;
+            else if (dna.GetGene(0) == (int)GeneInstructions.MovementStop) move -= 33;
         }
         else
         {
-            if (dna.GetGene(1) == (int)GeneInstructions.MovementForward) move = 1;
-            else if (dna.GetGene(1) == (int)GeneInstructions.MovementLeft) turn = -90;
-            else if (dna.GetGene(1) == (int)GeneInstructions.MovementRight) turn = 90;
-            else if (dna.GetGene(1) == (int)GeneInstructions.MovementStop) move = 0;
+            if (dna.GetGene(1) == (int)GeneInstructions.MovementForward) move += 0.33f;
+            else if (dna.GetGene(1) == (int)GeneInstructions.MovementLeft) turn -= 90;
+            else if (dna.GetGene(1) == (int)GeneInstructions.MovementRight) turn += 90;
+            else if (dna.GetGene(1) == (int)GeneInstructions.MovementStop) move -= 33;
         }
 
         if (seeOther)
         {
-            if (dna.GetGene(2) == (int)GeneInstructions.MovementForward) move = 1;
-            else if (dna.GetGene(2) == (int)GeneInstructions.MovementLeft) turn = -90;
-            else if (dna.GetGene(2) == (int)GeneInstructions.MovementRight) turn = 90;
-            else if (dna.GetGene(2) == (int)GeneInstructions.MovementStop) move = 0;
+            if (dna.GetGene(2) == (int)GeneInstructions.MovementForward) move += 0.33f;
+            else if (dna.GetGene(2) == (int)GeneInstructions.MovementLeft) turn -= 90;
+            else if (dna.GetGene(2) == (int)GeneInstructions.MovementRight) turn += 90;
+            else if (dna.GetGene(2) == (int)GeneInstructions.MovementStop) move -= 33;
         }
         else
         {
-            if (dna.GetGene(3) == (int)GeneInstructions.MovementForward) move = 1;
-            else if (dna.GetGene(3) == (int)GeneInstructions.MovementLeft) turn = -90;
-            else if (dna.GetGene(3) == (int)GeneInstructions.MovementRight) turn = 90;
-            else if (dna.GetGene(3) == (int)GeneInstructions.MovementStop) move = 0;
+            if (dna.GetGene(3) == (int)GeneInstructions.MovementForward) move += 0.33f;
+            else if (dna.GetGene(3) == (int)GeneInstructions.MovementLeft) turn -= 90;
+            else if (dna.GetGene(3) == (int)GeneInstructions.MovementRight) turn += 90;
+            else if (dna.GetGene(3) == (int)GeneInstructions.MovementStop) move -= 33;
         }
 
         if (seeResource)
         {
-            if (dna.GetGene(4) == (int)GeneInstructions.MovementForward) move = 1;
-            else if (dna.GetGene(4) == (int)GeneInstructions.MovementLeft) turn = -90;
-            else if (dna.GetGene(4) == (int)GeneInstructions.MovementRight) turn = 90;
-            else if (dna.GetGene(4) == (int)GeneInstructions.MovementStop) move = 0;
+            if (dna.GetGene(4) == (int)GeneInstructions.MovementForward) move += 0.33f;
+            else if (dna.GetGene(4) == (int)GeneInstructions.MovementLeft) turn -= 90;
+            else if (dna.GetGene(4) == (int)GeneInstructions.MovementRight) turn += 90;
+            else if (dna.GetGene(4) == (int)GeneInstructions.MovementStop) move -= 33;
         }
         else
         {
-            if (dna.GetGene(5) == (int)GeneInstructions.MovementForward) move = 1;
-            else if (dna.GetGene(5) == (int)GeneInstructions.MovementLeft) turn = -90;
-            else if (dna.GetGene(5) == (int)GeneInstructions.MovementRight) turn = 90;
-            else if (dna.GetGene(5) == (int)GeneInstructions.MovementStop) move = 0;
+            if (dna.GetGene(5) == (int)GeneInstructions.MovementForward) move += 0.33f;
+            else if (dna.GetGene(5) == (int)GeneInstructions.MovementLeft) turn -= 33;
+            else if (dna.GetGene(5) == (int)GeneInstructions.MovementRight) turn += 33;
+            else if (dna.GetGene(5) == (int)GeneInstructions.MovementStop) move -= 0.33f;
         }
 
         transform.Translate(0, 0, move * 0.1f);
@@ -191,18 +195,24 @@ public class Brain : MonoBehaviour
             if (dna.GetGene(7) == (int)GeneInstructions.ResourceLeave)
             {
                 //Do nothing
+                Debug.Log("I'm on a diet");
             }
             else if (dna.GetGene(7) == (int)GeneInstructions.ResourceTake)
             {
                 //TODO: Pickup - will drop on death
+                //Debug.Log("I think I'll keep this for later.");
             }
             else if (dna.GetGene(7) == (int)GeneInstructions.ResourceEat)
             {
+                Debug.Log("Fuck me, that looks tasty. I'll have some of that.");
+                r.Eat(20);
                 body.Feed(20);
             }
             else if(dna.GetGene(7) == (int)GeneInstructions.ResourceSpoil)
             {
-                //TODO: Implement destroying resource & consequence
+                //TODO: Implement consequence
+                Debug.Log("Eat this, fuckers.");
+                r.Spoil();
             }
         }
     }

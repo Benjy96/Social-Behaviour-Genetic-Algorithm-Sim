@@ -1,16 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Resource : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public int resourceAmount = 300;
+
+    public void Eat(int amount)
+    {
+        resourceAmount = Mathf.Clamp(resourceAmount -= amount, 0, resourceAmount);
+        if (resourceAmount <= 0) Spoil();
+    }
+
+    public void Spoil()
+    {
+        Destroy(gameObject);
+    }
 }
