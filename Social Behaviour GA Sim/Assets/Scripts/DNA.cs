@@ -4,6 +4,9 @@ using UnityEngine;
 
 /// <summary>
 /// DNA Length is related to the number of decisions to make - 3 bools in brain means 6 decisions
+/// 
+/// For each "input", or thing in the environment that the agent can interact with/detect, every gene should either react or not react, with multiple actions as possibilities.
+/// For example, imagine a single gene inside the body. It can either be exposed to a chemical, or not exposed to it. If it is exposed, it might act in 100 different ways. If not, it might do nothing.
 /// </summary>
 public class DNA
 {

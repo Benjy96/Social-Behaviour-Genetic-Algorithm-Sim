@@ -19,8 +19,9 @@ public class Brain : MonoBehaviour
     private int dnaValues = 4;
    
     bool alive = true;
-     
+
     //TODO: make a dynamic dictionary
+    bool seeWalkable = false;
     bool seeObstacle = false;
     bool seeOther = false;
     bool seeResource = false;
@@ -119,52 +120,40 @@ public class Brain : MonoBehaviour
         //Need weights since each bool will have a say on input - could weight genes, or make gene weighting genes
         //But yea, if we have multiple setters of the move variable, it needs to be sums rather than assignments, unless we just do one bool for movement
         //TODO: work out how to have multiple environmental factors within genes
+
+        //Changed bool-gene interactions. Previously I did 2 genes for seeObstacle, but the thing is, even though it was 1 bool, 2 things were implied, seeing a walkable, or seeing an obstacle.
+        //Now that we're explicity defining things, I will cover the true/false in two separate ifs, explicitly.
+        if (seeWalkable)
+        {
+            if (dna.GetGene(0) == (int)MovementInstructions.MovementForward) move = 1;
+            else if (dna.GetGene(0) == (int)MovementInstructions.MovementLeft) turn = -90;
+            else if (dna.GetGene(0) == (int)MovementInstructions.MovementRight) turn = 90;
+            else if (dna.GetGene(0) == (int)MovementInstructions.MovementStop) move = 0;
+        }
+
         if (seeObstacle)
         {
-            if (dna.GetGene(0) == (int)MovementInstructions.MovementForward) move += 0.33f;
-            else if (dna.GetGene(0) == (int)MovementInstructions.MovementLeft) turn -= 90;
-            else if (dna.GetGene(0) == (int)MovementInstructions.MovementRight) turn += 90;
-            else if (dna.GetGene(0) == (int)MovementInstructions.MovementStop) move -= 33;
-        }
-        else
-        {
-            if (dna.GetGene(1) == (int)MovementInstructions.MovementForward) move += 0.33f;
-            else if (dna.GetGene(1) == (int)MovementInstructions.MovementLeft) turn -= 90;
-            else if (dna.GetGene(1) == (int)MovementInstructions.MovementRight) turn += 90;
-            else if (dna.GetGene(1) == (int)MovementInstructions.MovementStop) move -= 33;
+            if (dna.GetGene(1) == (int)MovementInstructions.MovementForward) move = 1;
+            else if (dna.GetGene(1) == (int)MovementInstructions.MovementLeft) turn = -90;
+            else if (dna.GetGene(1) == (int)MovementInstructions.MovementRight) turn = 90;
+            else if (dna.GetGene(1) == (int)MovementInstructions.MovementStop) move = 0;
         }
 
         if (seeOther)
         {
-            if (dna.GetGene(2) == (int)MovementInstructions.MovementForward) move += 0.33f;
-            else if (dna.GetGene(2) == (int)MovementInstructions.MovementLeft) turn -= 90;
-            else if (dna.GetGene(2) == (int)MovementInstructions.MovementRight) turn += 90;
-            else if (dna.GetGene(2) == (int)MovementInstructions.MovementStop) move -= 33;
-        }
-        else
-        {
-            if (dna.GetGene(3) == (int)MovementInstructions.MovementForward) move += 0.33f;
-            else if (dna.GetGene(3) == (int)MovementInstructions.MovementLeft) turn -= 90;
-            else if (dna.GetGene(3) == (int)MovementInstructions.MovementRight) turn += 90;
-            else if (dna.GetGene(3) == (int)MovementInstructions.MovementStop) move -= 33;
+            if (dna.GetGene(2) == (int)MovementInstructions.MovementForward) move = 1;
+            else if (dna.GetGene(2) == (int)MovementInstructions.MovementLeft) turn = -90;
+            else if (dna.GetGene(2) == (int)MovementInstructions.MovementRight) turn = 90;
+            else if (dna.GetGene(2) == (int)MovementInstructions.MovementStop) move = 0;
         }
 
         if (seeResource)
         {
-            if (dna.GetGene(4) == (int)MovementInstructions.MovementForward) move += 0.33f;
-            else if (dna.GetGene(4) == (int)MovementInstructions.MovementLeft) turn -= 90;
-            else if (dna.GetGene(4) == (int)MovementInstructions.MovementRight) turn += 90;
-            else if (dna.GetGene(4) == (int)MovementInstructions.MovementStop) move -= 33;
+            if (dna.GetGene(3) == (int)MovementInstructions.MovementForward) move = 1;
+            else if (dna.GetGene(3) == (int)MovementInstructions.MovementLeft) turn -= 90;
+            else if (dna.GetGene(3) == (int)MovementInstructions.MovementRight) turn = 90;
+            else if (dna.GetGene(3) == (int)MovementInstructions.MovementStop) move = 0;
         }
-        else
-        {
-            if (dna.GetGene(5) == (int)MovementInstructions.MovementForward) move += 0.33f;
-            else if (dna.GetGene(5) == (int)MovementInstructions.MovementLeft) turn -= 33;
-            else if (dna.GetGene(5) == (int)MovementInstructions.MovementRight) turn += 33;
-            else if (dna.GetGene(5) == (int)MovementInstructions.MovementStop) move -= 0.33f;
-        }
-
-        move = Mathf.Clamp(move, 0, 1);
 
         transform.Translate(0, 0, move * 0.1f);
         transform.Rotate(0, turn, 0);
