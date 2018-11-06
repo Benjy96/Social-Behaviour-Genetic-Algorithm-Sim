@@ -76,7 +76,7 @@ public class PopulationManager : MonoBehaviour
     public void BreedNewPopulation()
     {
         //Longest living go to end of list
-        List<GameObject> sortedList = population.OrderBy(o => o.GetComponent<Brain>().timeAlive).ToList();
+        List<GameObject> sortedList = population.OrderBy(o => o.GetComponent<Brain>().GetHealth()).ToList();
 
         //Longest travelled to end of the list - fittest
         //Consider fitness from two factors: time walking and time alive

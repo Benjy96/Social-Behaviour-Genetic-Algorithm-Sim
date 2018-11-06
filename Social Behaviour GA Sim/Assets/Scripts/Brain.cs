@@ -25,6 +25,11 @@ public class Brain : MonoBehaviour
     bool seeOther = false;
     bool seeResource = false;
 
+    public int GetHealth()
+    {
+        return (int)body.health;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Deadly" || body.health <= 0)
@@ -153,6 +158,8 @@ public class Brain : MonoBehaviour
             else if (dna.GetGene(5) == (int)GeneInstructions.MovementRight) turn += 33;
             else if (dna.GetGene(5) == (int)GeneInstructions.MovementStop) move -= 0.33f;
         }
+
+        move = Mathf.Clamp(move, 0, 1);
 
         transform.Translate(0, 0, move * 0.1f);
         transform.Rotate(0, turn, 0);

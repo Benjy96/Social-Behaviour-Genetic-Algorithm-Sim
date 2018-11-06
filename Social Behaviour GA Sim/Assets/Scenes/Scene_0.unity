@@ -497,9 +497,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a2471da8c7a4449864e3f99f735f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trialTime: 100
+  trialTime: 10
   botPrefab: {fileID: 1772330915575732, guid: c05532479d2a1cb4d994fdb47ba8beb8, type: 2}
-  populationSize: 20
+  populationSize: 50
 --- !u!4 &1314195251
 Transform:
   m_ObjectHideFlags: 0
