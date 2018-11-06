@@ -200,7 +200,6 @@ public class Brain : MonoBehaviour
 
     private void RunResourceGenes(GameObject resource)
     {
-        Debug.Log("seeResource is: " + seeResource);
         if (seeResource)
         {
             Resource r = resource.GetComponent<Resource>();
