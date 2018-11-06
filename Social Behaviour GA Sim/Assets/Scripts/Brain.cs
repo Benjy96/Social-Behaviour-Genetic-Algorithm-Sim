@@ -30,14 +30,19 @@ public class Brain : MonoBehaviour
         return (int)body.health;
     }
 
+    public void Kill()
+    {
+        body.health = 0;
+        alive = false;
+        Debug.Log("Ouch!");
+        gameObject.SetActive(false);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Deadly" || body.health <= 0)
         {
-            alive = false;
-            Debug.Log("Ouch!");
-            //could wipe stats here if wanted               ----- NOTE -----
-            gameObject.SetActive(false);
+            Kill();
         }
     }
 
