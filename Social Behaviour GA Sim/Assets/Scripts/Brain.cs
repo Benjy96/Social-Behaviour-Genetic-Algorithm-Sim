@@ -84,19 +84,21 @@ public class Brain : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(eyes.transform.position, eyes.transform.forward * 10, out hit))
         {
+            Debug.Log("I see " + hit.collider.gameObject.name);
             if (!hit.collider.gameObject.tag.Equals("Walkable"))
             {
                 seeObstacle = true;
-                
             }
-            else if (hit.collider.gameObject.tag.Equals("Bot"))
-            {
-                seeOther = true;
-                other = hit.collider.gameObject;
-            }
+            //TODO: Stop seeing itself
+            //else if (hit.collider.gameObject.tag.Equals("Bot"))
+            //{
+            //    seeOther = true;
+            //    other = hit.collider.gameObject;
+            //}
             else if (hit.collider.gameObject.tag.Equals("Resource"))
             {
                 seeResource = true;
+                Debug.Log("I see a resource!");
                 resource = hit.collider.gameObject;
             }
         }
