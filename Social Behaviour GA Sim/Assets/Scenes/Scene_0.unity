@@ -637,7 +637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trialTime: 10
   botPrefab: {fileID: 1772330915575732, guid: c05532479d2a1cb4d994fdb47ba8beb8, type: 2}
-  populationSize: 1
+  populationSize: 2
 --- !u!4 &1314195251
 Transform:
   m_ObjectHideFlags: 0
