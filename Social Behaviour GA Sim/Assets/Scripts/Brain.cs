@@ -16,7 +16,7 @@ public class Brain : MonoBehaviour
     private Body body;
     
     private int DNALength = 7;   //dna length 7 because 7 decisions currently implemented
-    private int dnaValues = 3;
+    private int dnaValues = 4;
    
     bool alive = true;
      
@@ -101,14 +101,16 @@ public class Brain : MonoBehaviour
         if (seeObstacle)
         {
             if (dna.GetGene(0) == (int)GeneInstructions.MovementForward) move = 1;
-            else if (dna.GetGene(0) == (int)GeneInstructions.MovementLeft) turn = -90;  
-            else if (dna.GetGene(0) == (int)GeneInstructions.MovementRight) turn = 90;  
+            else if (dna.GetGene(0) == (int)GeneInstructions.MovementLeft) turn = -90;
+            else if (dna.GetGene(0) == (int)GeneInstructions.MovementRight) turn = 90;
+            else if (dna.GetGene(0) == (int)GeneInstructions.MovementStop) move = 0;
         }
         else
         {
             if (dna.GetGene(1) == (int)GeneInstructions.MovementForward) move = 1;
             else if (dna.GetGene(1) == (int)GeneInstructions.MovementLeft) turn = -90;
             else if (dna.GetGene(1) == (int)GeneInstructions.MovementRight) turn = 90;
+            else if (dna.GetGene(1) == (int)GeneInstructions.MovementStop) move = 0;
         }
 
         if (seeOther)
@@ -116,12 +118,14 @@ public class Brain : MonoBehaviour
             if (dna.GetGene(2) == (int)GeneInstructions.MovementForward) move = 1;
             else if (dna.GetGene(2) == (int)GeneInstructions.MovementLeft) turn = -90;
             else if (dna.GetGene(2) == (int)GeneInstructions.MovementRight) turn = 90;
+            else if (dna.GetGene(2) == (int)GeneInstructions.MovementStop) move = 0;
         }
         else
         {
             if (dna.GetGene(3) == (int)GeneInstructions.MovementForward) move = 1;
             else if (dna.GetGene(3) == (int)GeneInstructions.MovementLeft) turn = -90;
             else if (dna.GetGene(3) == (int)GeneInstructions.MovementRight) turn = 90;
+            else if (dna.GetGene(3) == (int)GeneInstructions.MovementStop) move = 0;
         }
 
         if (seeResource)
@@ -129,12 +133,14 @@ public class Brain : MonoBehaviour
             if (dna.GetGene(4) == (int)GeneInstructions.MovementForward) move = 1;
             else if (dna.GetGene(4) == (int)GeneInstructions.MovementLeft) turn = -90;
             else if (dna.GetGene(4) == (int)GeneInstructions.MovementRight) turn = 90;
+            else if (dna.GetGene(4) == (int)GeneInstructions.MovementStop) move = 0;
         }
         else
         {
             if (dna.GetGene(5) == (int)GeneInstructions.MovementForward) move = 1;
             else if (dna.GetGene(5) == (int)GeneInstructions.MovementLeft) turn = -90;
             else if (dna.GetGene(5) == (int)GeneInstructions.MovementRight) turn = 90;
+            else if (dna.GetGene(5) == (int)GeneInstructions.MovementStop) move = 0;
         }
 
         transform.Translate(0, 0, move * 0.1f);
@@ -175,6 +181,7 @@ public enum GeneInstructions
     MovementForward = 0,
     MovementLeft,
     MovementRight,
+    MovementStop,
     InteractionAttack,
     InteractionGive,
     InteractionIgnore,
