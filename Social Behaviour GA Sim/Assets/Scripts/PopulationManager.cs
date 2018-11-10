@@ -18,6 +18,7 @@ public class PopulationManager : MonoBehaviour
 
     public GameObject botPrefab;
     public int populationSize = 50;
+    public int botSpawnOffsetRange = 10;
 
     public GameObject resourcePrefab;
     public int numResources = 10;
@@ -46,9 +47,9 @@ public class PopulationManager : MonoBehaviour
     {
         for (int i = 0; i < populationSize; i++)
         {
-            Vector3 startPos = new Vector3(transform.position.x + Random.Range(-30, 30),
+            Vector3 startPos = new Vector3(transform.position.x + Random.Range(-botSpawnOffsetRange, botSpawnOffsetRange),
                                 transform.position.y,
-                                transform.position.z + Random.Range(-30, 30));
+                                transform.position.z + Random.Range(-botSpawnOffsetRange, botSpawnOffsetRange));
 
             GameObject b = Instantiate(botPrefab, startPos, transform.rotation);
             b.GetComponent<Brain>().Init();
@@ -59,7 +60,7 @@ public class PopulationManager : MonoBehaviour
 
     GameObject Breed(GameObject parent1, GameObject parent2)
     {
-        Vector3 startPos = new Vector3(transform.position.x + Random.Range(-30, 30), transform.position.y, transform.position.z + Random.Range(-30, 30));
+        Vector3 startPos = new Vector3(transform.position.x + Random.Range(-botSpawnOffsetRange, botSpawnOffsetRange), transform.position.y, transform.position.z + Random.Range(-botSpawnOffsetRange, botSpawnOffsetRange));
 
         //Create a child
         GameObject offspring = Instantiate(botPrefab, startPos, transform.rotation);

@@ -25,6 +25,7 @@ public class Body : MonoBehaviour {
         health -= amount;
     }
 
+    //TODO: add gene for rate limit
     public void Feed(float amount)
     {
         //health = Mathf.Clamp(health += amount, 0, 100);

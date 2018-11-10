@@ -17,7 +17,7 @@ public class Brain : MonoBehaviour
     public DNA dna;
     private Body body;
     
-    private int DNALength = 6;   //dna length 6 because 6 decisions currently implemented
+    private int DNALength = 7;   //dna length 6 because 6 decisions currently implemented
     private int dnaValues = 4;
    
     bool alive = true;
@@ -28,6 +28,8 @@ public class Brain : MonoBehaviour
     bool seeObstacle = false;
     bool seeOther = false;
     bool seeResource = false;
+
+    float timeToNextHungry = 0f;
 
     public int GetHealth()
     {
@@ -50,6 +52,14 @@ public class Brain : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag.Equals("Deadly"))
+        {
+            Kill();
+        }
+    }
+
     private void OnDestroy()
     {
         Destroy(botPrefab);
@@ -57,11 +67,6 @@ public class Brain : MonoBehaviour
 
     public void Init()
     {
-        //dna length 2, 4 possible values
-        //0 - forward
-        //1 - left
-        //2 - right
-        //3 - stop
         dna = new DNA(DNALength, dnaValues);
         timeAlive = 0;
         alive = true;
@@ -96,18 +101,17 @@ public class Brain : MonoBehaviour
             else if (hit.collider.gameObject.tag.Equals("Deadly"))
             {
                 seeObstacle = true;
-                //Debug.Log("That looks dangerous");
             }
             else if (hit.collider.gameObject.tag.Equals("Bot"))
             {
                 seeOther = true;
-                Debug.Log("I see another bot!");
+                //Debug.Log("I see another bot!");
                 other = hit.collider.gameObject;
             }
             else if (hit.collider.gameObject.tag.Equals("Resource"))
             {
                 seeResource = true;
-                Debug.Log("I see a resource!");
+                //Debug.Log("I see a resource!");
                 resource = hit.collider.gameObject;
             }
         }
@@ -117,6 +121,7 @@ public class Brain : MonoBehaviour
         RunResourceGenes(resource);
     }
 
+    //TODO: Make movement steering-based (smooth turn rather than city-block up down left right)
     /// <summary>
     /// Control the movement related genes (Each gene represents a possible instruction to run)
     /// 3 bools (true or false) means 6 genes - 6 decisions to be made
@@ -129,7 +134,6 @@ public class Brain : MonoBehaviour
         //TODO: Sum result of genes? The last gene will overwrite all previous - think flocking algorithm
         //Need weights since each bool will have a say on input - could weight genes, or make gene weighting genes
         //But yea, if we have multiple setters of the move variable, it needs to be sums rather than assignments, unless we just do one bool for movement
-        //TODO: work out how to have multiple environmental factors within genes
 
         //Changed bool-gene interactions. Previously I did 2 genes for seeObstacle, but the thing is, even though it was 1 bool, 2 things were implied, seeing a walkable, or seeing an obstacle.
         //Now that we're explicity defining things, I will cover the true/false in two separate ifs, explicitly.
@@ -166,7 +170,8 @@ public class Brain : MonoBehaviour
         }
 
         transform.Translate(0, 0, move * 0.1f);
-        transform.Rotate(0, turn, 0);
+        //TODO: Add speed genes
+        transform.Rotate(0, turn * Time.deltaTime * 10f, 0);
     }
 
     /// <summary>
@@ -218,9 +223,17 @@ public class Brain : MonoBehaviour
             }
             else if (dna.GetGene(5) == (int)ResourceInstructions.ResourceEat)
             {
-                Debug.Log("Fuck me, that looks tasty. I'll have some of that.");
-                r.Eat(20);
-                body.Feed(20);
+                if (timeToNextHungry <= Time.time)
+                {
+                    Debug.Log("Fuck me, that looks tasty. I'll have some of that.");
+                    r.Eat(20);
+                    body.Feed(20);
+                    timeToNextHungry = Time.time + dna.GetGene(6);
+                }
+                else
+                {
+                    Debug.Log("I'm full.");
+                }
             }
             else if(dna.GetGene(5) == (int)ResourceInstructions.ResourceSpoil)
             {
