@@ -108,6 +108,10 @@ public class PopulationManager : MonoBehaviour
 
     private void PlaceResources()
     {
+        for (int i = 0; i < resources.Count; i++)
+        {
+            Destroy(resources[i]);
+        }
         resources.Clear();
 
         //TODO: dynamically adjust to population size / make population size not limited to 50
