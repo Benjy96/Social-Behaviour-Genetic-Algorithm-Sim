@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This class controls the bots.
+/// This class controls the bots. Think of them as cells - keep it simple.
+/// These cells have DNA - which contain genes, and genes run instructions.
+/// Genes react to external stimuli. Only some genes react to some stimuli. For example, in real life, Gene 34356 may react to a chemical catalyst by growing a section of a cell.
 /// </summary>
 public class Brain : MonoBehaviour
 {
@@ -15,12 +17,13 @@ public class Brain : MonoBehaviour
     public DNA dna;
     private Body body;
     
-    private int DNALength = 8;   //dna length 8 because 8 decisions currently implemented
+    private int DNALength = 6;   //dna length 6 because 6 decisions currently implemented
     private int dnaValues = 4;
    
     bool alive = true;
 
     //TODO: make a dynamic dictionary
+    //TODO: Make genes decide which decisions to make - e.g., if (Gene(x) == 1) consider Genes 3-5, else consider genes 6-7 (this could be for considering an enemy over food, for example - let the dna rank importance of stimuli)
     bool seeWalkable = false;
     bool seeObstacle = false;
     bool seeOther = false;
@@ -159,6 +162,9 @@ public class Brain : MonoBehaviour
         transform.Rotate(0, turn, 0);
     }
 
+    /// <summary>
+    /// Other objects only affect the 5th gene - e.g., imagine one gene only reacts with this catalyst
+    /// </summary>
     private void RunInteractionGenes(GameObject other)
     {
         if (seeOther)
@@ -166,24 +172,24 @@ public class Brain : MonoBehaviour
             //TODO: add inner options, such as see colour of enemy and take action depending on their colour
             Body otherBody = other.GetComponent<Body>();
 
-            if (dna.GetGene(6) == (int)InteractionInstructions.InteractionAttack)
+            if (dna.GetGene(4) == (int)InteractionInstructions.InteractionAttack)
             {
                 otherBody.Damage(20);   //todo: remove hard coding
                 Debug.DrawLine(transform.position, other.transform.position, Color.green);
             }
-            else if (dna.GetGene(6) == (int)InteractionInstructions.InteractionGive)
+            else if (dna.GetGene(4) == (int)InteractionInstructions.InteractionGive)
             {
                 otherBody.Feed(20);
                 //TODO: Add benefits of feeding, e.g.:
                     //1. Increased "visual" indicator of friendliness
                     //2. Money from other
             }
-            else if(dna.GetGene(6) == (int)InteractionInstructions.InteractionTrade)
+            else if(dna.GetGene(4) == (int)InteractionInstructions.InteractionTrade)
             {
                 //TODO: implement if have, feed other, get money
                 //TODO: events? benefits / consequences simpler than communication
             }
-            else if (dna.GetGene(6) == (int)InteractionInstructions.InteractionIgnore) return;
+            else if (dna.GetGene(4) == (int)InteractionInstructions.InteractionIgnore) return;
         }
     }
 
@@ -193,23 +199,23 @@ public class Brain : MonoBehaviour
         {
             Resource r = resource.GetComponent<Resource>();
 
-            if (dna.GetGene(7) == (int)ResourceInstructions.ResourceLeave)
+            if (dna.GetGene(5) == (int)ResourceInstructions.ResourceLeave)
             {
                 //Do nothing
                 Debug.Log("I'm on a diet");
             }
-            else if (dna.GetGene(7) == (int)ResourceInstructions.ResourceTake)
+            else if (dna.GetGene(5) == (int)ResourceInstructions.ResourceTake)
             {
                 //TODO: Pickup - will drop on death
                 Debug.Log("I think I'll keep this for later.");
             }
-            else if (dna.GetGene(7) == (int)ResourceInstructions.ResourceEat)
+            else if (dna.GetGene(5) == (int)ResourceInstructions.ResourceEat)
             {
                 Debug.Log("Fuck me, that looks tasty. I'll have some of that.");
                 r.Eat(20);
                 body.Feed(20);
             }
-            else if(dna.GetGene(7) == (int)ResourceInstructions.ResourceSpoil)
+            else if(dna.GetGene(5) == (int)ResourceInstructions.ResourceSpoil)
             {
                 //TODO: Implement consequence
                 Debug.Log("Eat this, fuckers.");
