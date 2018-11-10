@@ -96,7 +96,7 @@ public class Brain : MonoBehaviour
             else if (hit.collider.gameObject.tag.Equals("Deadly"))
             {
                 seeObstacle = true;
-                Debug.Log("That looks dangerous");
+                //Debug.Log("That looks dangerous");
             }
             else if (hit.collider.gameObject.tag.Equals("Bot"))
             {
