@@ -26,7 +26,8 @@ public class Body : MonoBehaviour {
 
     public void Feed(int amount)
     {
-        health = Mathf.Clamp(health += amount, 0, 100);
+        //health = Mathf.Clamp(health += amount, 0, 100);
+        health += amount;
     }
 
     private void Update()
