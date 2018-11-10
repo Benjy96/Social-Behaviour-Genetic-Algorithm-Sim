@@ -84,7 +84,7 @@ public class Brain : MonoBehaviour
         seeResource = false;
         GameObject resource = null;
 
-        //Register the environment - what the agent sees
+        //Register the environment - what the agent sees - can see 1 thing at a time
         RaycastHit hit;
         if (Physics.Raycast(eyes.transform.position, eyes.transform.forward * 10, out hit))
         {

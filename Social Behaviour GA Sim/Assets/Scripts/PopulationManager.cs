@@ -18,7 +18,12 @@ public class PopulationManager : MonoBehaviour
 
     public GameObject botPrefab;
     public int populationSize = 50;
+
+    public GameObject resourcePrefab;
+    public int numResources = 10;
+    
     List<GameObject> population = new List<GameObject>();
+    List<GameObject> resources = new List<GameObject>();
 
     int generation = 1;
 
@@ -49,6 +54,7 @@ public class PopulationManager : MonoBehaviour
             b.GetComponent<Brain>().Init();
             population.Add(b);
         }
+        PlaceResources();
     }
 
     GameObject Breed(GameObject parent1, GameObject parent2)
@@ -100,6 +106,18 @@ public class PopulationManager : MonoBehaviour
         generation++;
     }
 
+    private void PlaceResources()
+    {
+        resources.Clear();
+
+        //TODO: dynamically adjust to population size / make population size not limited to 50
+        for (int i = 0; i < numResources; i++)
+        {
+            Vector3 startPos = new Vector3(transform.position.x + Random.Range(-60, 60), transform.position.y, transform.position.z + Random.Range(-60, 60));
+            resources.Add(Instantiate(resourcePrefab, startPos, Quaternion.identity));
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -107,6 +125,7 @@ public class PopulationManager : MonoBehaviour
         if (elapsed >= trialTime)
         {
             BreedNewPopulation();
+            PlaceResources();
             elapsed = 0;
         }
     }
