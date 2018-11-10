@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Deadly
   - Resource
+  - Walkable
   layers:
   - Default
   - TransparentFX
