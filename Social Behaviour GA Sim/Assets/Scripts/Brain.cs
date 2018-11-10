@@ -57,10 +57,11 @@ public class Brain : MonoBehaviour
 
     public void Init()
     {
-        //dna length 2, 3 possible values
+        //dna length 2, 4 possible values
         //0 - forward
         //1 - left
         //2 - right
+        //3 - stop
         dna = new DNA(DNALength, dnaValues);
         timeAlive = 0;
         alive = true;
@@ -88,13 +89,19 @@ public class Brain : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(eyes.transform.position, eyes.transform.forward * 10, out hit))
         {
-            if (hit.collider.gameObject.tag.Equals("Deadly"))
+            if (hit.collider.gameObject.tag.Equals("Walkable"))
+            {
+                seeWalkable = true;
+            }
+            else if (hit.collider.gameObject.tag.Equals("Deadly"))
             {
                 seeObstacle = true;
+                Debug.Log("That looks dangerous");
             }
             else if (hit.collider.gameObject.tag.Equals("Bot"))
             {
                 seeOther = true;
+                Debug.Log("I see another bot!");
                 other = hit.collider.gameObject;
             }
             else if (hit.collider.gameObject.tag.Equals("Resource"))
